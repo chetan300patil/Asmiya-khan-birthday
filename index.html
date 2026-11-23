@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday Asmiya ❤️</title>
+<meta name="theme-color" content="#8e234f">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Georgia,'Times New Roman',serif}
+body{color:#fff;background:radial-gradient(circle at 20% 15%,#6d285e,transparent 35%),radial-gradient(circle at 80% 80%,#8f214c,transparent 40%),linear-gradient(145deg,#180d2b,#4b163f 55%,#160b25);overflow-x:hidden}
+main{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative}
+.card{width:min(680px,100%);padding:34px 24px 38px;text-align:center;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border-radius:28px;box-shadow:0 18px 60px rgba(0,0,0,.28);position:relative;z-index:2}
+.kicker{letter-spacing:3px;text-transform:uppercase;color:#ffd7e8;font:12px Arial,sans-serif}
+h1{font-size:clamp(36px,9vw,66px);margin:18px 0 12px;color:#ffe4f0;text-shadow:0 0 22px #ff9dc9}
+p{font-size:19px;line-height:1.65}
+button{border:0;border-radius:999px;padding:15px 24px;background:linear-gradient(90deg,#ff77ad,#ffcfdf);color:#521433;font-weight:bold;font-size:16px;cursor:pointer;box-shadow:0 8px 26px #ff6aa855;transition:transform .2s}
+button:hover{transform:translateY(-2px) scale(1.02)}
+#surprise{display:none;animation:fadeIn 1.1s ease both}
+.heart{font-size:56px;display:inline-block;animation:beat 1.2s infinite}
+.message{font-size:clamp(18px,4.8vw,23px);color:#fff4f8;margin:24px auto;max-width:560px}
+.signature{color:#ffd6e8;font-style:italic;font-size:21px}
+.cake{font-size:72px;margin:12px}
+#musicBtn{margin-top:10px;background:rgba(255,255,255,.16);color:white;border:1px solid rgba(255,255,255,.25);box-shadow:none;font-size:14px}
+.floating{position:fixed;bottom:-30px;pointer-events:none;z-index:1;animation:floatUp linear forwards;opacity:.8}
+@keyframes floatUp{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.card{padding:28px 18px}.message{line-height:1.55}}
+</style>
+</head>
+<body>
+<main>
+<section class="card">
+<div id="intro">
+<div class="kicker">A little surprise for you</div>
+<h1>For Asmiya… 💗</h1>
+<p>Someone has a special message for the most special girl.</p>
+<button id="openBtn">Open your surprise 🎁</button>
+</div>
+<div id="surprise">
+<div class="heart">❤️</div>
+<div class="kicker">Today is all about you</div>
+<h1>Happy Birthday,<br>Asmiya Khan! 🎂</h1>
+<div class="cake">🎂🌹</div>
+<p class="message">
+Happy birthday to the girl who makes my days brighter and my heart happier.
+I wish your life is filled with endless smiles, beautiful moments, peace, success,
+and all the love you deserve. No matter how ordinary a day is, you make it special
+just by being in my life. I hope today reminds you how precious you are to me.
+Keep smiling, keep shining, and always remember—you have a very special place in my heart. ❤️
+</p>
+<p class="signature">With all my love, today and always 💌</p>
+<button id="musicBtn">♪ Play a little birthday melody</button>
+<p style="font:12px Arial,sans-serif;color:#ffd8e8;margin-top:18px">Made with love, just for you ✨</p>
+</div>
+</section>
+</main>
+<script>
+const openBtn=document.getElementById('openBtn');
+openBtn.addEventListener('click',()=>{
+ document.getElementById('intro').style.display='none';
+ document.getElementById('surprise').style.display='block';
+ for(let i=0;i<45;i++) setTimeout(makeFloat,i*80);
+});
+function makeFloat(){
+ const el=document.createElement('span');el.className='floating';
+ el.textContent=['💗','💕','❤️','✨','🌹'][Math.floor(Math.random()*5)];
+ el.style.left=Math.random()*100+'vw';el.style.fontSize=(16+Math.random()*24)+'px';
+ el.style.animationDuration=(4+Math.random()*4)+'s';
+ document.body.appendChild(el);setTimeout(()=>el.remove(),8500);
+}
+let audioCtx, playing=false, melodyTimer;
+const musicBtn=document.getElementById('musicBtn');
+musicBtn.addEventListener('click',()=>{
+ if(playing){clearInterval(melodyTimer);playing=false;musicBtn.textContent='♪ Play a little birthday melody';return}
+ audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+ playing=true;musicBtn.textContent='■ Stop melody';
+ const notes=[523,659,784,659,587,698,880,784,659,523,587,659,523];
+ let idx=0;
+ function tone(){
+   if(!playing)return;
+   const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+   osc.type='sine';osc.frequency.value=notes[idx%notes.length];
+   gain.gain.setValueAtTime(.0001,audioCtx.currentTime);
+   gain.gain.exponentialRampToValueAtTime(.07,audioCtx.currentTime+.03);
+   gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.28);
+   osc.connect(gain);gain.connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+.3);
+   idx++;
+ }
+ tone();melodyTimer=setInterval(tone,360);
+});
+</script>
+</body>
+</html>
